@@ -44,7 +44,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final Firebase ref = new Firebase("https://extraclass.firebaseio.com/");
+        final Firebase ref = new Firebase(getString(R.string.base_url_firebase));
 
         sdfLocal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdfUTC  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -56,9 +56,9 @@ public class Result extends AppCompatActivity {
         Intent intent = this.getIntent();
         userkey = intent.getStringExtra("userkey");
 
-        usertopicref = new Firebase("https://extraclass.firebaseio.com/users/" + userkey + "/topics");
+        usertopicref = new Firebase(getString(R.string.base_url_firebase) +"/users/" + userkey + "/topics");
         getKey(usertopicref);
-        usermcqref = new Firebase("https://extraclass.firebaseio.com/users/" + userkey + "/mcqs");
+        usermcqref = new Firebase(getString(R.string.base_url_firebase) + "/users/" + userkey + "/mcqs");
         Query query = usertopicref.orderByChild("name");
 
         recyclerAdapter = new FirebaseRecyclerAdapter<Usertopics, ResultDataObjectHolder>(Usertopics.class, R.layout.resulttopicitem, ResultDataObjectHolder.class, query) {
@@ -78,10 +78,12 @@ public class Result extends AppCompatActivity {
                         recyclerAdapter2 = new FirebaseRecyclerAdapter<Usermcq, MyViewHolder>(Usermcq.class, R.layout.navresultitem, MyViewHolder.class, query1) {
                             @Override
                             public void populateViewHolder(MyViewHolder myViewHolder, final Usermcq usermcq, final int position2) {
-                                myViewHolder.questionnumber.setText("Q." + counter);
+                                myViewHolder.getQuestionnumber().setText("Q." + counter);
                                 if(usermcq.getType().equals("text")) {
-                                    myViewHolder.question.setText(usermcq.getQuestion());
-                                    myViewHolder.answer.setText(usermcq.getAnswer());
+                                    myViewHolder.getQuestion().setText(usermcq.getQuestion());
+                                    myViewHolder.getAnswer().setText(usermcq.getAnswer());
+                                    myViewHolder.getYourAnswer().setText(usermcq.getYourAnswer());
+                                    myViewHolder.getExplanation().setText(usermcq.getExplanation());
 //                                    Picasso.with(getBaseContext()).load("http://www.frostox.com/extraclass/uploads/");
 //
 //                                    Picasso.with(getBaseContext()).load("http://www.frostox.com/extraclass/uploads/");
@@ -92,19 +94,31 @@ public class Result extends AppCompatActivity {
                                     String answer = usermcq.getState().substring(usermcq.getState().length()-1);
                                     File quest = new File(extraClassFolder, usermcq.getMcqid() + "quest");
                                     File A = new File(extraClassFolder,  usermcq.getMcqid() + answer);
+                                    File yourAnswerFile = new File(extraClassFolder,  usermcq.getMcqid() + usermcq.getYourOption());
 
-                                    myViewHolder.question.setText("");
-                                    myViewHolder.answer.setText("");
-                                    Picasso.with(getBaseContext()).load(quest).into(myViewHolder.imgquestion);
+                                    myViewHolder.getQuestion().setText("");
+                                    myViewHolder.getAnswer().setText("");
+                                    myViewHolder.getYourAnswer().setText("");
+                                    Picasso.with(getBaseContext()).load(quest).into(myViewHolder.getImgquestion());
 
-                                    Picasso.with(getBaseContext()).load(A).into(myViewHolder.imganswer);
+                                    Picasso.with(getBaseContext()).load(A).into(myViewHolder.getImganswer());
+                                    Picasso.with(getBaseContext()).load(yourAnswerFile).into(myViewHolder.getYourAnswerImage());
+
+
                                 }
+
+                                File explanation = new File(extraClassFolder,  usermcq.getMcqid() + "explanation");
+                                if(explanation.exists()){
+                                    Picasso.with((getBaseContext())).load(explanation).into(myViewHolder.getImgexplanation());
+                                } else myViewHolder.getExplanation().setText(usermcq.getExplanation());
+
+
                                 if (usermcq.getState().contains("Correct"))
-                                    myViewHolder.ct.setImageResource(R.drawable.mark);
+                                    myViewHolder.getCt().setImageResource(R.drawable.mark);
                                 else if (usermcq.getState().contains("Wrong"))
-                                    myViewHolder.ct.setImageResource(R.drawable.cross);
+                                    myViewHolder.getCt().setImageResource(R.drawable.cross);
                                 else if(usermcq.getState().contains("Skip"))
-                                    myViewHolder.ct.setImageResource(R.drawable.skip);
+                                    myViewHolder.getCt().setImageResource(R.drawable.skip);
                                 counter++;
                             }
                         };

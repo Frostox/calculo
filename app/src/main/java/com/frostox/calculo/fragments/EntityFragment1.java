@@ -125,7 +125,7 @@ public class EntityFragment1 extends Fragment implements AdapterView.OnItemSelec
             userkey = getArguments().getString(ARG_PARAM3);
         }
 
-        ref = new Firebase("https://extraclass.firebaseio.com/");
+        ref = new Firebase(getContext().getString(R.string.base_url_firebase));
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(homeActivity));
 
@@ -227,7 +227,7 @@ public class EntityFragment1 extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onClick(View v) {
 
-                    topicref = new Firebase("https://extraclass.firebaseio.com/users/" + userkey + "/topics/");
+                    topicref = new Firebase(getContext().getString(R.string.base_url_firebase) + "/users/" + userkey + "/topics/");
                     Usertopics usertopics = new Usertopics(topicname, id, getTimeStamp(),difficulty);
                     Firebase pushtopic = topicref.push();
                     String usertopickey = pushtopic.getKey();

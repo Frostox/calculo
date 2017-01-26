@@ -50,7 +50,7 @@ public class McqActivity extends AppCompatActivity {
     Button Skip;
 
     String[] ans, ansA, ansB, ansC, ansD, explanation, explanationType, name, question, topic, type, key;
-    String[] rvqno, rvexpurl, rvurl, rvansurl, rvqn, rvans, rvexp, rvnid;
+    String[] rvqno, rvexpurl, rvurl, rvansurl, rvqn, rvans, rvexp, rvnid, youranswer, youransurl;
     int[] ct;
     ScrollView scrollres;
     RelativeLayout choosea, chooseb, choosec, choosed, prntrl;
@@ -107,7 +107,7 @@ public class McqActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
 
-        ref = new Firebase("https://extraclass.firebaseio.com/mcqs/");
+        ref = new Firebase(getString(R.string.base_url_firebase)+ "/mcqs/");
 
         Intent intent = this.getIntent();
         id = intent.getStringExtra("id");
@@ -115,7 +115,7 @@ public class McqActivity extends AppCompatActivity {
         noq = intent.getStringExtra("noq");
         userkey = intent.getStringExtra("userkey");
         usertopickey = intent.getStringExtra("usertopickey");
-        mcqref = new Firebase("https://extraclass.firebaseio.com/users/" + userkey + "/mcqs");
+        mcqref = new Firebase(getString(R.string.base_url_firebase) + "/users/" + userkey + "/mcqs");
         namebar = "Default";
         Query query = ref.orderByChild("topic").equalTo(id);
         count = 0;
@@ -272,6 +272,8 @@ public class McqActivity extends AppCompatActivity {
         rvans = new String[count];
         rvexp = new String[count];
         rvnid = new String[count];
+        youranswer = new String[count];
+        youransurl = new String[count];
 
         cardview = (CardView) findViewById(R.id.card_view);
         choosea = (RelativeLayout) findViewById(R.id.choosea);
@@ -300,11 +302,11 @@ public class McqActivity extends AppCompatActivity {
         imgquestion.setVisibility(View.INVISIBLE);
         textinvisible();
         imginvisible();
-        TouchListener(choosea, "A");
-        TouchListener(chooseb, "B");
-        TouchListener(choosec, "C");
-        TouchListener(choosed, "D");
-        TouchListener(Skip, "skip");
+        TouchListener(choosea, "A", optionA);
+        TouchListener(chooseb, "B", optionB);
+        TouchListener(choosec, "C", optionC);
+        TouchListener(choosed, "D", optionD);
+        TouchListener(Skip, "skip", null);
         page = 0;
         Log.d("Testreachedinit",type[page] + ".." + ansA[page]);
         checkanswer = new boolean[count];
@@ -428,15 +430,19 @@ public class McqActivity extends AppCompatActivity {
 
             if (ans[i].equals("A")) {
                 rvansurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "A");
+                youransurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "A");
                 rvans[i] = "A";
             } else if (ans[i].equals("B")) {
                 rvansurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "B");
+                youransurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "A");
                 rvans[i] = "B";
             } else if (ans[i].equals("C")) {
                 rvansurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "C");
+                youransurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "A");
                 rvans[i] = "C";
             } else if (ans[i].equals("D")) {
                 rvansurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "D");
+                youransurl[i] = (getString(R.string.base_url_extraclass)+"uploads/" + key[i] + "A");
                 rvans[i] = "D";
             }
         }
@@ -459,7 +465,7 @@ public class McqActivity extends AppCompatActivity {
         v.vibrate(500);
     }*/
 
-    public void TouchListener(View v, final String option) {
+    public void TouchListener(final View v, final String option, final TextView yourOption) {
 
         final String check = String.valueOf(v.getId());
         v.setOnTouchListener(new View.OnTouchListener() {
@@ -473,6 +479,8 @@ public class McqActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+                if(yourOption != null)
+                    youranswer[page] = yourOption.getText().toString();
 
                 switch (motionEvent.getAction()) {
 
@@ -502,17 +510,17 @@ public class McqActivity extends AppCompatActivity {
                                 ct[page] = R.drawable.cross;
                                 state = "Wrong";
                                 checkanswer[page] = false;
-                                onClickNext((View) findViewById(R.id.dummy));
+                                onClickNext(findViewById(R.id.dummy));
                             }
                             Log.d("Testreachedtouch",state + ".." + usertopickey + ".." +type[page-1] + ".." + ansA[page-1]);
                             if (ans[page-1].equals("A"))
-                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1]);
+                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1], youranswer[page-1], explanation[page-1], option);
                             else if (ans[page-1].equals("B"))
-                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1]);
+                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1], youranswer[page-1], explanation[page-1], option);
                             else if (ans[page-1].equals("C"))
-                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1]);
+                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1], youranswer[page-1], explanation[page-1], option);
                             else if (ans[page-1].equals("D"))
-                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1]);
+                                mcqs = new Usermcq(usertopickey, key[page-1], state + " " + ans[page-1], ansA[page-1], question[page-1], type[page-1], youranswer[page-1], explanation[page-1], option);
                             mcqref.push().setValue(mcqs);
                         }
 
@@ -549,7 +557,7 @@ public class McqActivity extends AppCompatActivity {
         if (noqmode) length = (Integer.parseInt(noq));
         else length = count;
         for (int i = 0; i < length; i++) {
-            ResultData current = new ResultData(rvnid[i], rvurl[i], rvansurl[i], rvexpurl[i], rvqno[i], rvqn[i], rvans[i], rvexp[i], ct[i]);
+            ResultData current = new ResultData(rvnid[i], rvurl[i], rvansurl[i], rvexpurl[i], rvqno[i], rvqn[i], rvans[i], rvexp[i], ct[i], youranswer[i], youransurl[i]);
 
 
             input.add(current);

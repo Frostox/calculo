@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ref = new Firebase("https://extraclass.firebaseio.com/");
+        ref = new Firebase(getString(R.string.base_url_firebase));
 
         sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         //checkLogin();
@@ -146,82 +146,7 @@ public class MainActivity extends AppCompatActivity {
         } else init();
 
 
-//        File notesFolder = new File(extraClassFolder, "notes");
-//
-//        File contentsOfMcq[] = mcqImagesFolder.listFiles();
-//        File contentsOfNotes[] = notesFolder.listFiles();
-//
-//        if(!extraClassFolder.exists() || contentsOfMcq == null || contentsOfMcq.length == 0){
-//            extraClassFolder.mkdirs();
-//            mcqImagesFolder.mkdirs();
-//
-//            startButton.setVisibility(View.INVISIBLE);
-//            progressMessage.setVisibility(View.VISIBLE);
-//            progressBar.setVisibility(View.VISIBLE);
-//
-//            Firebase ref = new Firebase("https://extraclass.firebaseio.com/");
-//            Firebase mcqs = ref.child("mcqs");
-//            final Firebase notes = ref.child("notes");
-//
-//            mcqs.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    fileTypes.clear();
-//                    final String baseUrl = "http://www.frostox.com/extraclass/uploads/";
-//                    for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-//                        if(childSnapshot.child("type").getValue(String.class).equals("image")){
-//                            FileType fileType = new FileType();
-//
-//                            fileType.setName(childSnapshot.getKey() + "quest");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//                            fileType.setName(childSnapshot.getKey() + "A");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//                            fileType.setName(childSnapshot.getKey() + "B");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//                            fileType.setName(childSnapshot.getKey() + "C");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//                            fileType.setName(childSnapshot.getKey() + "D");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//
-//                        }
-//                        if(childSnapshot.child("explanationType").getValue(String.class).equals("image")){
-//                            FileType fileType = new FileType();
-//
-//
-//                            fileType.setName(childSnapshot.getKey() + "explanation");
-//                            fileType.setType("mcq");
-//                            fileType.setUrl(baseUrl  + fileType.getName());
-//                            fileTypes.add(fileType);
-//                        }
-//
-//
-//                    }
-//
-//                    new FileDownloaderAsyncTask(MainActivity.this).execute(fileTypes.toArray(new FileType[fileTypes.size()]));
-//
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(FirebaseError firebaseError) {
-//
-//                }
-//            });
 
-//        } else {
-//
-//
-//        }
 
     }
 

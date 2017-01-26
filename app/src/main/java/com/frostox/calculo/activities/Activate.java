@@ -51,8 +51,8 @@ public class Activate extends AppCompatActivity{
 
     boolean canGoBack = false;
 
-    Firebase base = new Firebase("https://extraclass.firebaseio.com/");
-    Firebase ref = new Firebase("https://extraclass.firebaseio.com/users");
+    Firebase base;
+    Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,8 @@ public class Activate extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        base = new Firebase(getString(R.string.base_url_firebase));
+        ref = new Firebase(getString(R.string.base_url_firebase) + "/users");
 
         canGoBack = this.getIntent().getBooleanExtra("canGoBack", false);
 

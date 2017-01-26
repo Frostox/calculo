@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="calculo.frostox.com.calculo"
-    android:versionCode="3"
+    android:versionCode="4"
     android:versionName="1.02">
 
     <uses-sdk tools:overrideLibrary="com.firebase.ui" />
@@ -106,11 +106,13 @@
         <activity
             android:name="com.frostox.calculo.pulled_sourses.wifidirect.WiFiDirectActivity"
             android:label="Share Data"
-            android:theme="@android:style/Theme.Holo.Light"></activity>
+            android:theme="@android:style/Theme.Holo.Light" />
 
         <service
             android:name="com.frostox.calculo.pulled_sourses.wifidirect.AppNetService"
             android:enabled="true" />
+
+        <activity android:name="com.frostox.calculo.activities.MCQResultActivity"></activity>
     </application>
 
 </manifest>

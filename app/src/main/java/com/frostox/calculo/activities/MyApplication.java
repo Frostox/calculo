@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import calculo.frostox.com.calculo.R;
+
 /**
  * Created by shannonpereira601 on 21/04/16.
  */
@@ -42,13 +44,13 @@ public class MyApplication extends Application{
         Firebase.setAndroidContext(this);
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
         Firebase.getDefaultConfig().setPersistenceCacheSizeBytes(104857600);
-        Firebase refCourses = new Firebase("https://extraclass.firebaseio.com/courses");
-        Firebase refSubjects = new Firebase("https://extraclass.firebaseio.com/subjects");
-        Firebase refNotes = new Firebase("https://extraclass.firebaseio.com/notes");
-        Firebase refMcqs = new Firebase("https://extraclass.firebaseio.com/mcqs");
-        Firebase refTopics = new Firebase("https://extraclass.firebaseio.com/topics");
-        Firebase refUsers = new Firebase("https://extraclass.firebaseio.com/users");
-        refUpdate =  new Firebase("https://extraclass.firebaseio.com/update");
+        Firebase refCourses = new Firebase(getString(R.string.base_url_firebase) + "/courses");
+        Firebase refSubjects = new Firebase(getString(R.string.base_url_firebase) + "/subjects");
+        Firebase refNotes = new Firebase(getString(R.string.base_url_firebase) + "/notes");
+        Firebase refMcqs = new Firebase(getString(R.string.base_url_firebase) + "/mcqs");
+        Firebase refTopics = new Firebase(getString(R.string.base_url_firebase) + "/topics");
+        Firebase refUsers = new Firebase(getString(R.string.base_url_firebase) + "/users");
+        refUpdate =  new Firebase(getString(R.string.base_url_firebase) + "/update");
 
 
 

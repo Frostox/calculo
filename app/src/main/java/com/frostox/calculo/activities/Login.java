@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
        sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
-        ref = new Firebase("https://extraclass.firebaseio.com/");
+        ref = new Firebase(getString(R.string.base_url_firebase));
 
         if(ref.getAuth()!=null)
         {
@@ -165,19 +165,7 @@ public class Login extends AppCompatActivity {
 
 
 
-                            /*
-                            final Firebase reftr = new Firebase("https://extraclass.firebaseio.com/courses");
-                            reftr.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot snapshot) {
-                                    System.out.println("onn" + snapshot.getValue());
-                                }
 
-                                @Override
-                                public void onCancelled(FirebaseError firebaseError) {
-                                    System.out.println("The read failed: " + firebaseError.getMessage());
-                                }
-                            });*/
 
                         }
 

@@ -14,10 +14,11 @@ public class ResultData {
     public int ct;
     public String imgansurl;
     public String id;
+    private String yourAnswer;
+    private String yourAnswerUrl;
 
 
-
-    public ResultData(String id, String imgqnurl,String imgansurl, String expurl, String qno,String qn,String ans,String exp, int ct)
+    public ResultData(String id, String imgqnurl,String imgansurl, String expurl, String qno,String qn,String ans,String exp, int ct, String yourAnswer, String yourAnswerUrl)
     {
         this.id = id;
         this.setCt(ct);
@@ -28,8 +29,25 @@ public class ResultData {
         this.setQn(qn);
         this.setAns(ans);
         this.setExp(exp);
+        this.yourAnswer = yourAnswer;
+        this.yourAnswerUrl = yourAnswerUrl;
     }
 
+    public String getYourAnswerUrl() {
+        return yourAnswerUrl;
+    }
+
+    public void setYourAnswerUrl(String yourAnswerUrl) {
+        this.yourAnswerUrl = yourAnswerUrl;
+    }
+
+    public String getYourAnswer() {
+        return yourAnswer;
+    }
+
+    public void setYourAnswer(String yourAnswer) {
+        this.yourAnswer = yourAnswer;
+    }
 
     public int getCt() {
         return ct;

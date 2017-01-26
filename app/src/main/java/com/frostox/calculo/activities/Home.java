@@ -104,7 +104,7 @@ public class Home extends AppCompatActivity
             e.printStackTrace();
         }
 
-        ref = new Firebase("https://extraclass.firebaseio.com/");
+        ref = new Firebase(getString(R.string.base_url_firebase));
         AuthData authData = ref.getAuth();
         userid = authData.getUid();
         getUserKey();
